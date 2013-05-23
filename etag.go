@@ -21,6 +21,7 @@ func IsStale(w http.ResponseWriter, r *http.Request, key string) (isStale bool) 
 	if ifNoneMatch != "" && ifNoneMatch == key {
 		isStale = false
 		w.WriteHeader(304)
+		w.Write([]byte(""))
 	} else {
 		isStale = true
 	}

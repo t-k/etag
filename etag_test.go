@@ -17,8 +17,6 @@ func init() {
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 			if IsStale(w, r, ETAG_KEY) {
 				w.Write([]byte("hello"))
-			} else {
-				w.Write([]byte(""))
 			}
 		})
 		http.ListenAndServe(":4567", nil)

@@ -38,7 +38,6 @@ func main() {
       w.Write([]byte("Hello world!"))
     } else {
       // you don't need to do anything.
-      w.Write([]byte(""))
     }
   })
   http.ListenAndServe(":8000", nil)
