@@ -36,9 +36,9 @@ func main() {
     if etag.IsStale(w, r, "etag-key") {
       // normal response processing
       w.Write([]byte("Hello world!"))
-    } else {
-      // you don't need to do anything.
     }
+    // If the request is fresh (i.e. it's not modified) then you don't need to do anything.
+ 
   })
   http.ListenAndServe(":8000", nil)
 }
