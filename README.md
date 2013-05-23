@@ -1,6 +1,8 @@
 etag
 ====
 
+[![Build Status](https://travis-ci.org/t-k/etag.png?branch=master)](https://travis-ci.org/t-k/etag)
+
 ## Provide etag support for Go web server.
 
 ## How to install
