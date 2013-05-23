@@ -2,7 +2,6 @@ package etag
 
 import (
 	"bufio"
-	"github.com/bmizerany/assert"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -42,9 +41,15 @@ func TestEtagIsStaleWithoutEtag(t *testing.T) {
 	res, err := get("")
 	if err == nil {
 		contents, _ := ioutil.ReadAll(res.Body)
-		assert.Equal(t, string(contents), "hello")
-		assert.Equal(t, res.Status, "200 OK")
-		assert.Equal(t, string(res.Header.Get("Etag")), ETAG_KEY)
+		if string(contents) != "hello" {
+			t.Errorf("TestEtagIsStaleWithoutEtag returned %d, expected %d", string(contents), "hello")
+		}
+		if res.Status != "200 OK" {
+			t.Errorf("TestEtagIsStaleWithoutEtag returned %d, expected %d", res.Status, "200 OK")
+		}
+		if string(res.Header.Get("Etag")) != ETAG_KEY {
+			t.Errorf("TestEtagIsStaleWithoutEtag returned %d, expected %d", string(res.Header.Get("Etag")), ETAG_KEY)
+		}
 	}
 }
 
@@ -52,8 +57,14 @@ func TestEtagIsStaleWithEtag(t *testing.T) {
 	res, err := get(ETAG_KEY)
 	if err == nil {
 		contents, _ := ioutil.ReadAll(res.Body)
-		assert.Equal(t, string(contents), "")
-		assert.Equal(t, res.Status, "304 Not Modified")
-		assert.Equal(t, string(res.Header.Get("Etag")), ETAG_KEY)
+		if string(contents) != "" {
+			t.Errorf("TestEtagIsStaleWithEtag returned %d, expected %d", string(contents), "")
+		}
+		if res.Status != "304 Not Modified" {
+			t.Errorf("TestEtagIsStaleWithEtag returned %d, expected %d", res.Status, "304 Not Modified")
+		}
+		if string(res.Header.Get("Etag")) != ETAG_KEY {
+			t.Errorf("TestEtagIsStaleWithEtag returned %d, expected %d", string(res.Header.Get("Etag")), ETAG_KEY)
+		}
 	}
 }
