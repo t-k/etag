@@ -34,13 +34,16 @@ import (
 func main() {
   http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
     if etag.IsStale(w, r, "etag-key") {
-      w.Write([]byte(""))
-    } else {
+      // normal response processing
       w.Write([]byte("Hello world!"))
+    } else {
+      // you don't need to do anything.
+      w.Write([]byte(""))
     }
   })
   http.ListenAndServe(":8000", nil)
 }
+
 ```
 
 ## Tests
