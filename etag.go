@@ -15,6 +15,8 @@ func Set(w http.ResponseWriter, key string) {
 }
 
 // IsStale sets the etag on the response and checks it against the client request.
+// If the request doesn’t match the options provided, the request is considered stale and should be generated from scratch.
+// Otherwise, it’s fresh and we don’t need to generate anything and a reply of "304 Not Modified" is sent.
 func IsStale(w http.ResponseWriter, r *http.Request, key string) (isStale bool) {
 	ifNoneMatch := Get(r)
 	Set(w, key)
